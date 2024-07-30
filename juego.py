@@ -7,7 +7,7 @@ pygame.init()
 
 # Inicializa la fuente
 font = pygame.font.Font(None, 36)  # None para la fuente predeterminada, 36 es el tamaño de la fuente
-score = 0  # Variable para el puntaje
+score = 100  # Variable para el puntaje
 
 player=Player(100,300)#Posicion inicial del Player
 enemies=[]
