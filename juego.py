@@ -7,7 +7,7 @@ pygame.init()
 
 # Inicializa la fuente
 font = pygame.font.Font(None, 36)  # None para la fuente predeterminada, 36 es el tamaño de la fuente
-score = 100  # Variable para el puntaje
+score = 0  # Variable para el puntaje
 
 player=Player(100,300)#Posicion inicial del Player
 enemies=[]
@@ -42,8 +42,10 @@ while running:  # Bucle principal, se ejecuta mientras la variable 'running' sea
     for enemy in enemies:
         enemy.update()
         enemy.draw()
-        #if Enemy.colision(player,enemy):
-         #   pass
+        if Enemy.colision(player,enemy):
+            score+=100 # si toca al anemigo suma 100 puntos
+            enemies.remove(enemy)  # Remueve el enemigo
+            
 
 #----------------------Moviendo el personaje, arriba - abajo - izquierda - derecha-------------------------------------------------
     keys = pygame.key.get_pressed()
