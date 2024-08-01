@@ -19,7 +19,7 @@ cabeza.speed(0)
 cabeza.shape("square")
 cabeza.color("black")
 cabeza.penup()  #no dejar rastro
-cabeza.goto(0,0)
+cabeza.goto(10,0)
 cabeza.direction="stop"
 
 #Cuerpo Serpiente
