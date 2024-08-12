@@ -22,7 +22,7 @@ N3_posX = 190
 
 pygame.init()
 screen = pygame.display.set_mode((800,600))
-pygame.display.set_caption("The World - Prueba")
+pygame.display.set_caption("OFIRCA Olimpiadas")
 
 #Colores
 White = (255,255,255)
