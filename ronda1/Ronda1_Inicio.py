@@ -88,6 +88,12 @@ while juegoEnEjecucion:
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w] or keys[pygame.K_UP]:
         avatar_rect.y -= rapidezPersonaje 
+    elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
+        avatar_rect.y += rapidezPersonaje
+    elif keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+        avatar_rect.x += rapidezPersonaje
+    elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
+        avatar_rect.x -= rapidezPersonaje
     
     clock.tick(60) 
     

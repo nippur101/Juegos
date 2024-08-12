@@ -3,6 +3,8 @@ play: bool = True
 playin = 1
 GamePreview = 0 #Poner en Cero(0) por Defecto
 
+clock=pygame.time.Clock()
+
 #Player Position
 posY = 550
 posX = 400
@@ -43,6 +45,9 @@ def preview1():
     #pygame.draw.rect(screen, White, (200)) #Descripcion del Juego.
 
 while play:
+
+    clock.tick(500)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             play = False
@@ -57,6 +62,8 @@ while play:
     elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
         posX -= Speed
     
+    
+
     #Visualizacion
     if playin == 1:
         Inicio()
