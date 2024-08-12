@@ -66,5 +66,5 @@ while running:  # Bucle principal
         player.y = new_y
 
     pygame.display.flip()
-
+#ljlslnks
 pygame.quit()
