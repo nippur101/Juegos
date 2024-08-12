@@ -26,6 +26,19 @@ pygame.init()
 screen = pygame.display.set_mode((800,600))
 pygame.display.set_caption("OFIRCA Olimpiadas")
 
+# Cargo los recursos
+imgFondo = pygame.image.load("fondo.png")
+imgUAIBOT = pygame.image.load("UAIBOT.png")
+    
+
+#personaje pa
+nombrePersonaje = 'UAIBOT'
+avatar = imgUAIBOT
+avatar_rect = avatar.get_rect()
+posY = 550
+posX = 400
+Speed = 0.2
+
 #Colores
 White = (255,255,255)
 Black = (0, 0, 0)
@@ -34,11 +47,14 @@ Grey = (50, 50, 50)
 
 #Funciones
 def Inicio():
-    screen.fill(Green)
-    Player = pygame.draw.circle(screen, Black, (posX, posY), 15)
+    screen.blit(imgFondo, (0, 0))
     NPC1 = pygame.draw.circle(screen, Black, (N1_posX, N1_posY), 20)
     NPC2 = pygame.draw.circle(screen, Black, (N2_posX, N2_posY), 20)
     NPC3 = pygame.draw.circle(screen, Black, (N3_posX, N3_posY), 20)
+
+def dibujarJugador():
+    global avatar
+    screen.blit(avatar, avatar_rect)
     
 def preview1():
     pygame.draw.rect(screen, Grey, (250, 10, 400, 400)) #Contenedor.
@@ -70,7 +86,8 @@ while play:
         
     if GamePreview == 1:
         preview1()
-            
+
+    dibujarJugador()    
     pygame.display.update()
             
 pygame.quit()            
