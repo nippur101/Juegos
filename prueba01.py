@@ -8,7 +8,7 @@ clock=pygame.time.Clock()
 #pantalla
 HEIGHT=600
 WIDTH=800
-
+BACKGROUND_COLOR=(99,155,255) #color del Rio
 #Player Position
 posY = 550
 posX = 400
@@ -58,6 +58,18 @@ Green = (0, 255, 0)
 Grey = (50, 50, 50)
 
 #Funciones
+def colision_fondo_infraqueable(x, y, width, height):
+    x = int(x)
+    y = int(y)
+    width = int(width)
+    height = int(height)
+    for i in range(x, x + width):
+        for j in range(y, y + height):
+            if imgFondo.get_at((i, j)) == BACKGROUND_COLOR:
+                return True
+    return False
+
+
 def Inicio():
     screen.blit(imgFondo, (0, 0))
     NPC1 = pygame.draw.circle(screen, Black, (N1_posX, N1_posY), 20)
@@ -89,14 +101,22 @@ while play:
             play = False
             
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_DOWN] or keys[pygame.K_s]:
-        posY += Speed
-    elif keys[pygame.K_UP] or keys[pygame.K_w]:
-        posY -= Speed
-    elif keys[pygame.K_RIGHT] or keys[pygame.K_d]:
-        posX += Speed
-    elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
-        posX -= Speed
+    new_x, new_y = posX, posY
+
+    if keys[pygame.K_LEFT]:
+        new_x -= Speed
+    if keys[pygame.K_RIGHT]:
+        new_x += Speed
+    if keys[pygame.K_UP]:
+        new_y -= Speed
+    if keys[pygame.K_DOWN]:
+        new_y += Speed
+
+    # Verificar colisiones con el color de fondo
+    if not colision_fondo_infraqueable(new_x, new_y, playerWidth, playerHeight):
+        posX = new_x
+        posY = new_y
+
     #Colocando limites en los bordes
     if posX<0:
         posX=0
