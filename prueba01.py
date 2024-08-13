@@ -1,4 +1,5 @@
 import pygame
+
 play: bool = True
 playin = 1
 GamePreview = 0 #Poner en Cero(0) por Defecto
@@ -23,13 +24,17 @@ N3_posY = 30
 N3_posX = 190
 
 pygame.init()
-screen = pygame.display.set_mode((800,600))
+screen = pygame.display.set_mode((800, 600))
 pygame.display.set_caption("OFIRCA Olimpiadas")
 
 # Cargo los recursos
-imgFondo = pygame.image.load("fondo.png")
-imgUAIBOT = pygame.image.load("UAIBOT.png")
-    
+try:
+    imgFondo = pygame.image.load('fondo3.jpg').convert()
+    imgUAIBOT = pygame.image.load("UAIBOT.png").convert()
+    imgUAIBOT = pygame.transform.scale(imgUAIBOT, (50, 50))  # Cambia (50, 50) al tamaño deseado
+except pygame.error as e:
+    print(f"Error al cargar las imágenes: {e}")
+
 
 #personaje pa
 nombrePersonaje = 'UAIBOT'
