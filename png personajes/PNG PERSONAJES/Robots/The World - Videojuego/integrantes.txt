@@ -1,0 +1,8 @@
+The World - VideoJuego
+
+Integrantes:
+Simon Gasparri - Programador
+Tiziano Gimenez - Programador
+Feze Masi - Diseñador Grafico
+
+Gracias al profesor Javier Macedo por sus explicaciones y el tiempo dedicado.
