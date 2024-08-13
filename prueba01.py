@@ -37,6 +37,8 @@ try:
     imgFondo = pygame.transform.scale(imgFondo, (WIDTH, HEIGHT))
     imgUAIBOT = pygame.image.load("UAIBOT.png").convert()
     imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))  # Cambia (50, 50) al tamaño deseado
+    imgTacho = pygame.image.load("tacho-de-basura.png")
+    imgTacho = pygame.transform.scale(imgTacho, (100,100))
 except pygame.error as e:
     print(f"Error al cargar las imágenes: {e}")
 
@@ -70,6 +72,13 @@ def dibujarJugador():
 def preview1():
     pygame.draw.rect(screen, Grey, (250, 10, 500, 400)) #Contenedor.
     #pygame.draw.rect(screen, White, (200)) #Descripcion del Juego.
+
+def dibujartacho():
+    global imgTacho
+    screen.blit(imgTacho, (N1_posX, N1_posY))
+
+
+
 
 while play:
 
@@ -106,7 +115,8 @@ while play:
     if GamePreview == 1:
         preview1()
 
-    dibujarJugador()    
+    dibujarJugador() 
+    dibujartacho()
     pygame.display.update()
             
 pygame.quit()            

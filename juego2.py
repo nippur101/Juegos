@@ -1,6 +1,6 @@
 import pygame
 import random
-from personajes import *
+from imagenes.personajes import *
 
 pygame.init()
 
