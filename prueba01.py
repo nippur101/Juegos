@@ -33,7 +33,7 @@ pygame.display.set_caption("OFIRCA Olimpiadas")
 
 # Cargo los recursos
 try:
-    imgFondo = pygame.image.load('fondo3.jpg').convert()
+    imgFondo = pygame.image.load('fondojuegodefi.png').convert()
     imgUAIBOT = pygame.image.load("UAIBOT.png").convert()
     imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))  # Cambia (50, 50) al tamaño deseado
 except pygame.error as e:
