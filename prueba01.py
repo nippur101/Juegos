@@ -59,7 +59,8 @@ def Inicio():
 
 def dibujarJugador():
     global avatar
-    screen.blit(avatar, avatar_rect)
+    screen.blit(avatar, (posX, posY))
+    #screen.blit(avatar, avatar_rect)
     
 def preview1():
     pygame.draw.rect(screen, Grey, (250, 10, 400, 400)) #Contenedor.
