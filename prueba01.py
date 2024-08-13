@@ -13,8 +13,8 @@ WIDTH=800
 posY = 550
 posX = 400
 Speed = 0.2
-playerHeight=50
-playerWidth=50
+playerHeight=40
+playerWidth=40
 #NPC Game ONE(1)
 N1_posY = 30
 N1_posX = 50
@@ -45,9 +45,9 @@ except pygame.error as e:
 nombrePersonaje = 'UAIBOT'
 avatar = imgUAIBOT
 avatar_rect = avatar.get_rect()
-posY = 550
-posX = 400
-Speed = 0.2
+posY = 205
+posX = 375
+Speed = 0.8
 
 #Colores
 White = (255,255,255)
@@ -68,12 +68,12 @@ def dibujarJugador():
     #screen.blit(avatar, avatar_rect)
     
 def preview1():
-    pygame.draw.rect(screen, Grey, (250, 10, 400, 400)) #Contenedor.
+    pygame.draw.rect(screen, Grey, (250, 10, 500, 400)) #Contenedor.
     #pygame.draw.rect(screen, White, (200)) #Descripcion del Juego.
 
 while play:
 
-    clock.tick(500)
+    clock.tick(60)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
