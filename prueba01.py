@@ -5,12 +5,16 @@ playin = 1
 GamePreview = 0 #Poner en Cero(0) por Defecto
 
 clock=pygame.time.Clock()
+#pantalla
+HEIGHT=600
+WIDTH=800
 
 #Player Position
 posY = 550
 posX = 400
 Speed = 0.2
-
+playerHeight=50
+playerWidth=50
 #NPC Game ONE(1)
 N1_posY = 30
 N1_posX = 50
@@ -24,14 +28,14 @@ N3_posY = 30
 N3_posX = 190
 
 pygame.init()
-screen = pygame.display.set_mode((800, 600))
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("OFIRCA Olimpiadas")
 
 # Cargo los recursos
 try:
     imgFondo = pygame.image.load('fondo3.jpg').convert()
     imgUAIBOT = pygame.image.load("UAIBOT.png").convert()
-    imgUAIBOT = pygame.transform.scale(imgUAIBOT, (50, 50))  # Cambia (50, 50) al tamaño deseado
+    imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))  # Cambia (50, 50) al tamaño deseado
 except pygame.error as e:
     print(f"Error al cargar las imágenes: {e}")
 
@@ -59,7 +63,7 @@ def Inicio():
 
 def dibujarJugador():
     global avatar
-    screen.blit(avatar, (posX, posY))
+    screen.blit(avatar, (posX, posY)) #Movimiento a la imagen del robot
     #screen.blit(avatar, avatar_rect)
     
 def preview1():
@@ -83,7 +87,15 @@ while play:
         posX += Speed
     elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
         posX -= Speed
-    
+    #Colocando limites en los bordes
+    if posX<0:
+        posX=0
+    if posX+playerWidth>WIDTH:
+        posX=WIDTH-playerWidth
+    if posY<0:
+        posY=0
+    if posY+playerHeight>HEIGHT:
+        posY=HEIGHT-playerHeight
     
 
     #Visualizacion
