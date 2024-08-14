@@ -92,10 +92,7 @@ def colision_fondo_infraqueable(x, y, width, height):
 
 def Inicio():
     screen.blit(imgFondo, (0, 0))
-    NPC1 = pygame.draw.circle(screen, Black, (N1_posX, N1_posY), 20)
-    NPC2 = pygame.draw.circle(screen, Black, (N2_posX, N2_posY), 20)
-    NPC3 = pygame.draw.circle(screen, Black, (N3_posX, N3_posY), 20)
-
+    
 def dibujarJugador():
     global avatar
     screen.blit(avatar, (posX, posY)) #Movimiento a la imagen del robot
