@@ -35,7 +35,7 @@ pygame.display.set_caption("OFIRCA Olimpiadas")
 try:
     imgFondo = pygame.image.load('fondojuegodefi.png').convert()
     imgFondo = pygame.transform.scale(imgFondo, (WIDTH, HEIGHT))
-    imgUAIBOT = pygame.image.load("UAIBOT.png").convert()
+    imgUAIBOT = pygame.image.load("UAIBOT.png")
     imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))  # Cambia (50, 50) al tamaño deseado
     imgTacho = pygame.image.load("tacho-de-basura.png")
     imgTacho = pygame.transform.scale(imgTacho, (100,100))
