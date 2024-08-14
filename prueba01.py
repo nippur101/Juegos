@@ -20,12 +20,28 @@ N1_posY = 30
 N1_posX = 50
 
 #NPC Game TWO(2)
-N2_posY = 30
-N2_posX = 120
+N2_posY = 15
+N2_posX = 250
 
 #NPC Game TREE(3)
-N3_posY = 30
-N3_posX = 190
+N3_posY = 300
+N3_posX = 700
+
+#NPC Game four(4)
+N4_posY = 500
+N4_posX = 30
+
+#NPC Game five(5)
+N5_posY = 100
+N5_posX = 100
+
+#NPC Game six(6)
+N6_posY = 200
+N6_posX = 200
+
+#NPC Game seven(7)
+N7_posY = 30
+N7_posX = 75
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -39,6 +55,10 @@ try:
     imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))  # Cambia (50, 50) al tamaño deseado
     imgTacho = pygame.image.load("tacho-de-basura.png")
     imgTacho = pygame.transform.scale(imgTacho, (100,100))
+    imgBasura = pygame.image.load ("BolsaGrisOscuro.png")
+    imgBasura = pygame.transform.scale(imgBasura, (100,100))
+    imgTacho2 = pygame.image.load ("cestoverde.png")
+    imgBasura2 = pygame.image.load ("BolsaVerde.png")
 except pygame.error as e:
     print(f"Error al cargar las imágenes: {e}")
 
@@ -85,9 +105,23 @@ def preview1():
     pygame.draw.rect(screen, Grey, (250, 10, 500, 400)) #Contenedor.
     #pygame.draw.rect(screen, White, (200)) #Descripcion del Juego.
 
-def dibujartacho():
+def dibujartachos():
     global imgTacho
     screen.blit(imgTacho, (N1_posX, N1_posY))
+    global imgTacho2
+    screen.blit(imgTacho2, (N7_posX, N7_posY))
+
+def dibujarbasuras():
+    global imgBasura
+    screen.blit(imgBasura, (N2_posX, N2_posY ))
+    screen.blit(imgBasura, (N3_posX, N3_posY ))
+    screen.blit(imgBasura, (N4_posX, N4_posY ))
+    global imgBasura2
+    screen.blit(imgBasura2, (N5_posX, N5_posY ))
+    screen.blit(imgBasura2, (N6_posX, N6_posY ))
+
+    
+    
 
 
 
@@ -136,7 +170,8 @@ while play:
         preview1()
 
     dibujarJugador() 
-    dibujartacho()
+    dibujartachos()
+    dibujarbasuras()
     pygame.display.update()
             
 pygame.quit()            
