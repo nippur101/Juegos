@@ -15,8 +15,8 @@ playerId=0
 posY = 550
 posX = 400
 Speed = 0.2
-playerHeight=40
-playerWidth=40
+playerHeight=45
+playerWidth=45
 #NPC Game ONE(1)
 N1_posY = 260
 N1_posX = 150
