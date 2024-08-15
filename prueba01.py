@@ -45,6 +45,14 @@ N6_posX = 200
 N7_posY = 450
 N7_posX = 460
 
+#NPC Game EIGHT(8)
+N8_posY = 480
+N8_posX = 265
+
+#NPC Game nine(9)
+N9_posY = 350
+N9_posX = 610
+
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("OFIRCA Olimpiadas")
@@ -71,6 +79,8 @@ try:
     imgTacho2 = pygame.transform.scale (imgTacho2, (100,100))
     imgBasura2 = pygame.image.load ("Bolsa verde.png")
     imgBasura2= pygame.transform.scale (imgBasura2, (75,75))
+    imgArbol = pygame.image.load ("arbol.png")
+    imgArbol = pygame.transform.scale (imgArbol, (110,110))
 except pygame.error as e:
     print(f"Error al cargar las imágenes: {e}")
 
@@ -137,12 +147,12 @@ def dibujarbasuras():
     screen.blit(imgBasura2, (N5_posX, N5_posY ))
     screen.blit(imgBasura2, (N6_posX, N6_posY ))
 
+def dibujararboles():
+    global imgArbol
+    screen.blit(imgArbol, (N8_posX, N8_posY))
+    screen.blit(imgArbol, (N9_posX, N9_posY))
+
     
-    
-
-
-
-
 while play:
 
     clock.tick(60)
@@ -197,6 +207,7 @@ while play:
     dibujarJugador() 
     dibujartachos()
     dibujarbasuras()
+    dibujararboles()
     pygame.display.update()
             
 pygame.quit()            
