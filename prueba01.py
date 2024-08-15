@@ -16,8 +16,8 @@ Speed = 0.2
 playerHeight=40
 playerWidth=40
 #NPC Game ONE(1)
-N1_posY = 30
-N1_posX = 50
+N1_posY = 260
+N1_posX = 150
 
 #NPC Game TWO(2)
 N2_posY = 15
@@ -40,8 +40,8 @@ N6_posY = 200
 N6_posX = 200
 
 #NPC Game seven(7)
-N7_posY = 30
-N7_posX = 75
+N7_posY = 450
+N7_posX = 460
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -55,10 +55,12 @@ try:
     imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))  # Cambia (50, 50) al tamaño deseado
     imgTacho = pygame.image.load("tacho-de-basura.png")
     imgTacho = pygame.transform.scale(imgTacho, (100,100))
-    imgBasura = pygame.image.load ("BolsaGrisOscuro.png")
-    imgBasura = pygame.transform.scale(imgBasura, (100,100))
-    imgTacho2 = pygame.image.load ("cestoverde.png")
-    imgBasura2 = pygame.image.load ("BolsaVerde.png")
+    imgBasura = pygame.image.load ("Bolsa negra.png")
+    imgBasura = pygame.transform.scale(imgBasura, (75,75))
+    imgTacho2 = pygame.image.load ("tacho-de-basura2.png")
+    imgTacho2 = pygame.transform.scale (imgTacho2, (100,100))
+    imgBasura2 = pygame.image.load ("Bolsa verde.png")
+    imgBasura2= pygame.transform.scale (imgBasura2, (75,75))
 except pygame.error as e:
     print(f"Error al cargar las imágenes: {e}")
 
