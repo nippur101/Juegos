@@ -1,4 +1,5 @@
 import pygame
+import time
 
 play: bool = True
 playin = 1
@@ -10,6 +11,7 @@ HEIGHT=600
 WIDTH=800
 BACKGROUND_COLOR=(99,155,255) #color del Rio
 #Player Position
+playerId=0
 posY = 550
 posX = 400
 Speed = 0.2
@@ -49,9 +51,17 @@ pygame.display.set_caption("OFIRCA Olimpiadas")
 
 # Cargo los recursos
 try:
+    robots = [
+            pygame.image.load("UAIBOT.png"),  
+            pygame.image.load("UAIBOTA.png"),
+            pygame.image.load("UAIBOTINA.png"),
+            pygame.image.load("UAIBOTINO.png")
+        ]
+    
     imgFondo = pygame.image.load('fondojuegodefi.png').convert()
     imgFondo = pygame.transform.scale(imgFondo, (WIDTH, HEIGHT))
-    imgUAIBOT = pygame.image.load("UAIBOT.png")
+    imgUAIBOT=robots[0]
+    #imgUAIBOT = pygame.image.load("UAIBOT.png")
     imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))  # Cambia (50, 50) al tamaño deseado
     imgTacho = pygame.image.load("tacho-de-basura.png")
     imgTacho = pygame.transform.scale(imgTacho, (100,100))
@@ -80,6 +90,14 @@ Green = (0, 255, 0)
 Grey = (50, 50, 50)
 
 #Funciones
+def cambiar_player(id):
+    time.sleep(0.200)
+    if(id==3):
+        return 0
+    else:
+        id+=1
+        return id
+    
 def colision_fondo_infraqueable(x, y, width, height):
     x = int(x)
     y = int(y)
@@ -144,7 +162,15 @@ while play:
         new_y -= Speed
     if keys[pygame.K_DOWN]:
         new_y += Speed
-
+        
+        
+    if keys[pygame.K_c]:
+        playerId=cambiar_player(playerId)
+        print(playerId)
+        imgUAIBOT=robots[playerId]
+        imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
+        avatar = imgUAIBOT
+        
     # Verificar colisiones con el color de fondo
     if not colision_fondo_infraqueable(new_x, new_y, playerWidth, playerHeight):
         posX = new_x
