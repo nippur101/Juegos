@@ -23,7 +23,6 @@ contBasuraCargada=0 #contado de basura que lleva el robot
 basuraWidth=50
 basuraHeight=50
 
-
 #Tachos
 T1_posY = 260
 T1_posX = 150
@@ -56,8 +55,6 @@ V3_posX = 300
 V4_posY = 250
 V4_posX = 300
 
-
-
 # ARBOLES=====
 A1_posY = 480
 A1_posX = 270
@@ -72,8 +69,13 @@ A4_posY = 150
 A4_posX = 720
 
 pygame.init()
+pygame.font.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("OFIRCA Olimpiadas")
+
+# Inicializa la fuente
+font = pygame.font.Font(None, 36)  # None para la fuente predeterminada, 36 es el tamaño de la fuente
+score = 0  # Variable para el puntaje
 
 # Cargo los recursos
 try:
@@ -149,7 +151,6 @@ def colision_basuraV(x1, y1):
                 return i
         return None
 
-
 def cambiar_player(id):
     time.sleep(0.200)
     if(id==3):
@@ -187,6 +188,10 @@ def dibujartachos():
     screen.blit(imgTacho, (T1_posX, T1_posY))
     global imgTacho2
     screen.blit(imgTacho2, (T2_posX, T2_posY))
+
+def dibujarpuntaje():
+    texto = font.render(f"Score: {score}", True, Black)
+    screen.blit(texto, (10,10))
 """
 def dibujarbasuras():
     #negras
@@ -277,10 +282,6 @@ while play:
         #print("tocando basura")
         del basurasV[colision_idx]
         
-
-
-    
-
     #Colocando limites en los bordes
     if posX<0:
         posX=0
@@ -299,11 +300,16 @@ while play:
     if GamePreview == 1:
         preview1()
 
+    if colision_basuraN():
+        score+=100
+
+
     dibujarJugador() 
     dibujartachos()
     dibujarbasurasV()
     dibujarbasurasN()
     dibujararboles()
+    dibujarpuntaje()
     pygame.display.update()
             
 pygame.quit()            
