@@ -20,8 +20,8 @@ playerWidth=45
 
 contBasuraCargada=0 #contado de basura que lleva el robot
 #basura
-basuraWidth=40
-basuraHeight=40
+basuraWidth=50
+basuraHeight=50
 
 
 #Tachos
@@ -60,10 +60,16 @@ V4_posX = 300
 
 # ARBOLES=====
 A1_posY = 480
-A1_posX = 265
+A1_posX = 270
 
-A2_posY = 150
-A2_posX = 120
+A2_posY = 360
+A2_posX = 605
+
+A3_posY = 335
+A3_posX = 145
+
+A4_posY = 150
+A4_posX = 720
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -85,9 +91,9 @@ try:
     imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))  # Cambia (50, 50) al tamaño deseado
     #Tachos===============================================
     imgTacho = pygame.image.load("tacho-de-basura.png")
-    imgTacho = pygame.transform.scale(imgTacho, (100,100))
+    imgTacho = pygame.transform.scale(imgTacho, (75,75))
     imgTacho2 = pygame.image.load ("tacho-de-basura2.png")
-    imgTacho2 = pygame.transform.scale (imgTacho2, (100,100))
+    imgTacho2 = pygame.transform.scale (imgTacho2, (75,75))
     #basura===============================================
     imgBasuraN1 = pygame.image.load ("Bolsa negra.png")
     imgBasuraN1 = pygame.transform.scale(imgBasuraN1, (basuraWidth,basuraHeight))
@@ -213,6 +219,8 @@ def dibujararboles():
     global imgArbol
     screen.blit(imgArbol, (A1_posX, A1_posY))
     screen.blit(imgArbol, (A2_posX, A2_posY))
+    screen.blit(imgArbol, (A3_posX, A3_posY))
+    screen.blit(imgArbol, (A4_posX, A4_posY))
 
 # Lista de posiciones de las basuras negras y verdes
 basurasN = [
