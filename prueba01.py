@@ -17,6 +17,12 @@ posX = 400
 Speed = 0.2
 playerHeight=45
 playerWidth=45
+
+#basura
+basuraWidth=75
+basuraHeight=75
+
+
 #NPC Game ONE(1)
 N1_posY = 260
 N1_posX = 150
@@ -33,25 +39,29 @@ N3_posX = 700
 N4_posY = 500
 N4_posX = 30
 
-#NPC Game five(5)
-N5_posY = 100
-N5_posX = 100
+#Basura verde
+V1_posY = 100
+V1_posX = 100
 
-#NPC Game six(6)
-N6_posY = 200
-N6_posX = 200
+V2_posY = 200
+V2_posX = 200
+
+V3_posY = 150
+V3_posX = 300
+
+V4_posY = 250
+V4_posX = 300
 
 #NPC Game seven(7)
 N7_posY = 450
 N7_posX = 460
 
-#NPC Game EIGHT(8)
-N8_posY = 480
-N8_posX = 265
+# ARBOLES=====
+A1_posY = 480
+A1_posX = 265
 
-#NPC Game nine(9)
-N9_posY = 350
-N9_posX = 610
+A2_posY = 150
+A2_posX = 120
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -68,17 +78,31 @@ try:
     
     imgFondo = pygame.image.load('fondojuegodefi.png').convert()
     imgFondo = pygame.transform.scale(imgFondo, (WIDTH, HEIGHT))
-    imgUAIBOT=robots[0]
-    #imgUAIBOT = pygame.image.load("UAIBOT.png")
+    imgUAIBOT=robots[0]                                              #robot elegido
     imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))  # Cambia (50, 50) al tamaño deseado
+    #Tachos===============================================
     imgTacho = pygame.image.load("tacho-de-basura.png")
     imgTacho = pygame.transform.scale(imgTacho, (100,100))
-    imgBasura = pygame.image.load ("Bolsa negra.png")
-    imgBasura = pygame.transform.scale(imgBasura, (75,75))
     imgTacho2 = pygame.image.load ("tacho-de-basura2.png")
     imgTacho2 = pygame.transform.scale (imgTacho2, (100,100))
-    imgBasura2 = pygame.image.load ("Bolsa verde.png")
-    imgBasura2= pygame.transform.scale (imgBasura2, (75,75))
+    #basura===============================================
+    imgBasuraN1 = pygame.image.load ("Bolsa negra.png")
+    imgBasuraN1 = pygame.transform.scale(imgBasuraN1, (75,75))
+    imgBasuraN2 = pygame.image.load ("Bolsa negra.png")
+    imgBasuraN2= pygame.transform.scale(imgBasuraN2, (75,75))
+    imgBasuraN3 = pygame.image.load ("Bolsa negra.png")
+    imgBasuraN3 = pygame.transform.scale(imgBasuraN3, (75,75))
+    imgBasuraV1 = pygame.image.load ("Bolsa verde.png")
+    imgBasuraV1= pygame.transform.scale (imgBasuraV1, (75,75))
+    imgBasuraV2 = pygame.image.load ("Bolsa verde.png")
+    imgBasuraV2= pygame.transform.scale (imgBasuraV2, (75,75))
+    imgBasuraV3 = pygame.image.load ("Bolsa verde.png")
+    imgBasuraV3= pygame.transform.scale (imgBasuraV3, (75,75))
+    imgBasuraV4 = pygame.image.load ("Bolsa verde.png")
+    imgBasuraV4= pygame.transform.scale (imgBasuraV4, (75,75))
+   
+    
+   #fondo complementos===============================================
     imgArbol = pygame.image.load ("arbol.png")
     imgArbol = pygame.transform.scale (imgArbol, (110,110))
 except pygame.error as e:
@@ -100,6 +124,12 @@ Green = (0, 255, 0)
 Grey = (50, 50, 50)
 
 #Funciones
+def colision_basura(x1,y1,x2,y2):
+        if x1<x2+basuraWidth and x1+playerWidth>x2 and y1<y2+basuraHeight and y1 +playerHeight>y2:
+            return True
+        else:
+            return False
+
 def cambiar_player(id):
     time.sleep(0.200)
     if(id==3):
@@ -139,18 +169,27 @@ def dibujartachos():
     screen.blit(imgTacho2, (N7_posX, N7_posY))
 
 def dibujarbasuras():
-    global imgBasura
-    screen.blit(imgBasura, (N2_posX, N2_posY ))
-    screen.blit(imgBasura, (N3_posX, N3_posY ))
-    screen.blit(imgBasura, (N4_posX, N4_posY ))
-    global imgBasura2
-    screen.blit(imgBasura2, (N5_posX, N5_posY ))
-    screen.blit(imgBasura2, (N6_posX, N6_posY ))
+    #negras
+    global imgBasuraN1
+    screen.blit(imgBasuraN1, (N2_posX, N2_posY ))
+    global imgBasuraN2
+    screen.blit(imgBasuraN2, (N3_posX, N3_posY ))
+    global imgBasuraN3
+    screen.blit(imgBasuraN3, (N4_posX, N4_posY ))
+    #verdes
+    global imgBasuraV1
+    screen.blit(imgBasuraV1, (V1_posX, V1_posY ))
+    global imgBasuraV2
+    screen.blit(imgBasuraV2, (V2_posX, V2_posY ))
+    global imgBasuraV3
+    screen.blit(imgBasuraV3, (V3_posX, V3_posY )) 
+    global imgBasuraV4
+    screen.blit(imgBasuraV4, (V4_posX, V4_posY ))
 
 def dibujararboles():
     global imgArbol
-    screen.blit(imgArbol, (N8_posX, N8_posY))
-    screen.blit(imgArbol, (N9_posX, N9_posY))
+    screen.blit(imgArbol, (A1_posX, A1_posY))
+    screen.blit(imgArbol, (A2_posX, A2_posY))
 
     
 while play:
@@ -185,6 +224,11 @@ while play:
     if not colision_fondo_infraqueable(new_x, new_y, playerWidth, playerHeight):
         posX = new_x
         posY = new_y
+
+    if colision_basura(new_x,new_y,N2_posX,N2_posY):
+       # score+=100 # si toca la basura
+       # imgBasura.remove(imgBasura)  # Remueve basura
+       print("tocando basura")
 
     #Colocando limites en los bordes
     if posX<0:
