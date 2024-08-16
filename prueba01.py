@@ -20,8 +20,8 @@ playerWidth=45
 
 contBasuraCargada=0 #contado de basura que lleva el robot
 #basura
-basuraWidth=75
-basuraHeight=75
+basuraWidth=40
+basuraHeight=40
 
 
 #Tachos
@@ -90,19 +90,19 @@ try:
     imgTacho2 = pygame.transform.scale (imgTacho2, (100,100))
     #basura===============================================
     imgBasuraN1 = pygame.image.load ("Bolsa negra.png")
-    imgBasuraN1 = pygame.transform.scale(imgBasuraN1, (75,75))
+    imgBasuraN1 = pygame.transform.scale(imgBasuraN1, (basuraWidth,basuraHeight))
     imgBasuraN2 = pygame.image.load ("Bolsa negra.png")
-    imgBasuraN2= pygame.transform.scale(imgBasuraN2, (75,75))
+    imgBasuraN2= pygame.transform.scale(imgBasuraN2, (basuraWidth,basuraHeight))
     imgBasuraN3 = pygame.image.load ("Bolsa negra.png")
-    imgBasuraN3 = pygame.transform.scale(imgBasuraN3, (75,75))
+    imgBasuraN3 = pygame.transform.scale(imgBasuraN3, (basuraWidth,basuraHeight))
     imgBasuraV1 = pygame.image.load ("Bolsa verde.png")
-    imgBasuraV1= pygame.transform.scale (imgBasuraV1, (75,75))
+    imgBasuraV1= pygame.transform.scale (imgBasuraV1, (basuraWidth,basuraHeight))
     imgBasuraV2 = pygame.image.load ("Bolsa verde.png")
-    imgBasuraV2= pygame.transform.scale (imgBasuraV2, (75,75))
+    imgBasuraV2= pygame.transform.scale (imgBasuraV2, (basuraWidth,basuraHeight))
     imgBasuraV3 = pygame.image.load ("Bolsa verde.png")
-    imgBasuraV3= pygame.transform.scale (imgBasuraV3, (75,75))
+    imgBasuraV3= pygame.transform.scale (imgBasuraV3, (basuraWidth,basuraHeight))
     imgBasuraV4 = pygame.image.load ("Bolsa verde.png")
-    imgBasuraV4= pygame.transform.scale (imgBasuraV4, (75,75))
+    imgBasuraV4= pygame.transform.scale (imgBasuraV4, (basuraWidth,basuraHeight))
    
     
    #fondo complementos===============================================
