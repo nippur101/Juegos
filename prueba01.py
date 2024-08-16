@@ -18,14 +18,18 @@ Speed = 0.2
 playerHeight=45
 playerWidth=45
 
+contBasuraCargada=0 #contado de basura que lleva el robot
 #basura
 basuraWidth=75
 basuraHeight=75
 
 
-#NPC Game ONE(1)
-N1_posY = 260
-N1_posX = 150
+#Tachos
+T1_posY = 260
+T1_posX = 150
+
+T2_posY = 450
+T2_posX = 460
 
 #NPC Game TWO(2)
 N2_posY = 15
@@ -52,9 +56,7 @@ V3_posX = 300
 V4_posY = 250
 V4_posX = 300
 
-#NPC Game seven(7)
-N7_posY = 450
-N7_posX = 460
+
 
 # ARBOLES=====
 A1_posY = 480
@@ -75,6 +77,7 @@ try:
             pygame.image.load("UAIBOTINA.png"),
             pygame.image.load("UAIBOTINO.png")
         ]
+    
     
     imgFondo = pygame.image.load('fondojuegodefi.png').convert()
     imgFondo = pygame.transform.scale(imgFondo, (WIDTH, HEIGHT))
@@ -124,11 +127,22 @@ Green = (0, 255, 0)
 Grey = (50, 50, 50)
 
 #Funciones
-def colision_basura(x1,y1,x2,y2):
-        if x1<x2+basuraWidth and x1+playerWidth>x2 and y1<y2+basuraHeight and y1 +playerHeight>y2:
-            return True
-        else:
-            return False
+def colision_basuraN(x1, y1):
+        for i, basura in enumerate(basurasN):
+            x2 = basura["posX"]
+            y2 = basura["posY"]
+            if x1 < x2 + basuraWidth and x1 + playerWidth > x2 and y1 < y2 + basuraHeight and y1 + playerHeight > y2:
+                return i
+        return None
+
+def colision_basuraV(x1, y1):
+        for i, basura in enumerate(basurasV):
+            x2 = basura["posX"]
+            y2 = basura["posY"]
+            if x1 < x2 + basuraWidth and x1 + playerWidth > x2 and y1 < y2 + basuraHeight and y1 + playerHeight > y2:
+                return i
+        return None
+
 
 def cambiar_player(id):
     time.sleep(0.200)
@@ -156,7 +170,7 @@ def Inicio():
 def dibujarJugador():
     global avatar
     screen.blit(avatar, (posX, posY)) #Movimiento a la imagen del robot
-    #screen.blit(avatar, avatar_rect)
+    screen.blit(avatar, avatar_rect)
     
 def preview1():
     pygame.draw.rect(screen, Grey, (250, 10, 500, 400)) #Contenedor.
@@ -164,10 +178,10 @@ def preview1():
 
 def dibujartachos():
     global imgTacho
-    screen.blit(imgTacho, (N1_posX, N1_posY))
+    screen.blit(imgTacho, (T1_posX, T1_posY))
     global imgTacho2
-    screen.blit(imgTacho2, (N7_posX, N7_posY))
-
+    screen.blit(imgTacho2, (T2_posX, T2_posY))
+"""
 def dibujarbasuras():
     #negras
     global imgBasuraN1
@@ -185,13 +199,33 @@ def dibujarbasuras():
     screen.blit(imgBasuraV3, (V3_posX, V3_posY )) 
     global imgBasuraV4
     screen.blit(imgBasuraV4, (V4_posX, V4_posY ))
+"""
+
+def dibujarbasurasV():
+    for basura in basurasV:
+        screen.blit(basura["img"], (basura["posX"], basura["posY"]))
+
+def dibujarbasurasN():
+    for basura in basurasN:
+        screen.blit(basura["img"], (basura["posX"], basura["posY"]))
 
 def dibujararboles():
     global imgArbol
     screen.blit(imgArbol, (A1_posX, A1_posY))
     screen.blit(imgArbol, (A2_posX, A2_posY))
 
-    
+# Lista de posiciones de las basuras negras y verdes
+basurasN = [
+    {"img": imgBasuraN1, "posX": N2_posX, "posY": N2_posY},
+    {"img": imgBasuraN2, "posX": N3_posX, "posY": N3_posY},
+    {"img": imgBasuraN3, "posX": N4_posX, "posY": N4_posY}
+    ]
+
+basurasV =[{"img": imgBasuraV1, "posX": V1_posX, "posY": V1_posY},
+    {"img": imgBasuraV2, "posX": V2_posX, "posY": V2_posY},
+    {"img": imgBasuraV3, "posX": V3_posX, "posY": V3_posY},
+    {"img": imgBasuraV4, "posX": V4_posX, "posY": V4_posY}]
+
 while play:
 
     clock.tick(60)
@@ -224,11 +258,20 @@ while play:
     if not colision_fondo_infraqueable(new_x, new_y, playerWidth, playerHeight):
         posX = new_x
         posY = new_y
+    
+    colision_idx = colision_basuraN(new_x, new_y)
+    if colision_idx is not None:
+        #print("tocando basura")
+        del basurasN[colision_idx]
 
-    if colision_basura(new_x,new_y,N2_posX,N2_posY):
-       # score+=100 # si toca la basura
-       # imgBasura.remove(imgBasura)  # Remueve basura
-       print("tocando basura")
+    colision_idx = colision_basuraV(new_x, new_y)
+    if colision_idx is not None:
+        #print("tocando basura")
+        del basurasV[colision_idx]
+        
+
+
+    
 
     #Colocando limites en los bordes
     if posX<0:
@@ -250,7 +293,8 @@ while play:
 
     dibujarJugador() 
     dibujartachos()
-    dibujarbasuras()
+    dibujarbasurasV()
+    dibujarbasurasN()
     dibujararboles()
     pygame.display.update()
             
