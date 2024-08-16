@@ -190,8 +190,8 @@ def dibujartachos():
     screen.blit(imgTacho2, (T2_posX, T2_posY))
 
 def dibujarpuntaje():
-    texto = font.render(f"Score: {score}", True, Black)
-    screen.blit(texto, (10,10))
+    texto = font.render(f"Score: {score}", True, White)
+    screen.blit(texto, (50,10))
 """
 def dibujarbasuras():
     #negras
@@ -300,8 +300,7 @@ while play:
     if GamePreview == 1:
         preview1()
 
-    if colision_basuraN():
-        score+=100
+
 
 
     dibujarJugador() 
