@@ -20,12 +20,16 @@ playerWidth=45
 
 contBasuraCargadaN=0 #contado de basura que lleva el robot
 contBasuraCargadaV=0
+tomarBasura=True
 #basura
 basuraWidth=40
 basuraHeight=40
 
 
 #Tachos
+tacho_width=70
+tacho_height=70
+
 T1_posY = 260
 T1_posX = 150
 
@@ -58,7 +62,8 @@ V4_posY = 250
 V4_posX = 300
 
 
-#arboles
+
+# ARBOLES=====
 A1_posY = 480
 A1_posX = 270
 
@@ -70,7 +75,6 @@ A3_posX = 145
 
 A4_posY = 150
 A4_posX = 720
-
 
 pygame.init()
 pygame.font.init()
@@ -97,9 +101,9 @@ try:
     imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))  # Cambia (50, 50) al tamaño deseado
     #Tachos===============================================
     imgTacho = pygame.image.load("tacho-de-basura.png")
-    imgTacho = pygame.transform.scale(imgTacho, (75,75))
+    imgTacho = pygame.transform.scale(imgTacho, (tacho_width,tacho_height))
     imgTacho2 = pygame.image.load ("tacho-de-basura2.png")
-    imgTacho2 = pygame.transform.scale (imgTacho2, (75,75))
+    imgTacho2 = pygame.transform.scale (imgTacho2, (tacho_width,tacho_height))
     #basura===============================================
     imgBasuraN1 = pygame.image.load ("Bolsa negra.png")
     imgBasuraN1 = pygame.transform.scale(imgBasuraN1, (basuraWidth,basuraHeight))
@@ -250,7 +254,7 @@ while play:
     new_x, new_y = posX, posY
 
     Speed=colision_camino(new_x,new_y,playerWidth,playerHeight)
-    print(Speed)
+    #print(Speed)
     if keys[pygame.K_LEFT]:
         new_x -= Speed
     if keys[pygame.K_RIGHT]:
@@ -263,7 +267,7 @@ while play:
         
     if keys[pygame.K_c] and (posX==375 and posY==205):#bloqueo de cambio de personaje luego de comenzado el juego
         playerId=cambiar_player(playerId)
-        print(playerId)
+        #print(playerId)
         imgUAIBOT=robots[playerId]
         imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
         avatar = imgUAIBOT
@@ -274,81 +278,112 @@ while play:
         posY = new_y
 
     
+    if(playerId==0 or playerId==1): 
+        if(contBasuraCargadaN!=2 and contBasuraCargadaV!=2 and (contBasuraCargadaV+contBasuraCargadaN)!=2): #permite cargar solo 2 basuras como maximo
+            tomarBasura=True
+        else:   
+            tomarBasura=False
+    
+    if(playerId==2 or playerId==3): 
+        if( contBasuraCargadaN!=1 and contBasuraCargadaV!=1): #permite cargar solo 1 basuras como maximo
+            tomarBasura=True
+        else:
+            tomarBasura=False
 
-    colision_idx = colision_basuraN(new_x, new_y) #Colision con basura Negra
-    if colision_idx is not None:
-        #print("tocando basura")
-        del basurasN[colision_idx]
-        score+=100
-        contBasuraCargadaN+=1
-        match playerId:
-            case 0:
-                if(contBasuraCargadaN==1):
-                    imgUAIBOT=pygame.image.load("UAIBOT 1 bolsa negra.png")
-                    imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
-                    avatar = imgUAIBOT
-                else:
-                    imgUAIBOT=pygame.image.load("UAIBOT 2 bolsas negras.png")
-                    imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
-                    avatar = imgUAIBOT
+    if(tomarBasura):    
+        colision_idx = colision_basuraN(new_x, new_y) #Colision con basura Negra
+        if colision_idx is not None:
+            #print("tocando basura")
+            del basurasN[colision_idx]
+            score+=100
+            contBasuraCargadaN+=1
+            print("Negra:",contBasuraCargadaN)
+            match playerId:
+                case 0:
+                    if(contBasuraCargadaN==1 and contBasuraCargadaV==0):
+                        imgUAIBOT=pygame.image.load("UAIBOT 1 bolsa negra.png")
+                        imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
+                        avatar = imgUAIBOT
+                    elif(contBasuraCargadaN==2):
+                        imgUAIBOT=pygame.image.load("UAIBOT 2 bolsas negras.png")
+                        imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
+                        avatar = imgUAIBOT
+                    elif(contBasuraCargadaN==1 and contBasuraCargadaV==1):
+                        imgUAIBOT=pygame.image.load("UAIBOT 2 bolsas negra y verde.png")
+                        imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
+                        avatar = imgUAIBOT
 
-            case 1:
-                if(contBasuraCargadaN==1):
-                    imgUAIBOT=pygame.image.load("UAIBOTA 1 bolsa negra.png")
-                    imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
-                    avatar = imgUAIBOT
-                else:
-                    imgUAIBOT=pygame.image.load("UAIBOTA 2 bolsas negras.png")
-                    imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
-                    avatar = imgUAIBOT
-            case 2:
-                if(contBasuraCargadaN==1):
-                    imgUAIBOT=pygame.image.load("UAIBOTINA 1 bolsa negra.png")
-                    imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
-                    avatar = imgUAIBOT
-            case 3:
-                if(contBasuraCargadaN==1):
-                    imgUAIBOT=pygame.image.load("UAIBOTINO 1 bolsa negra.png")
-                    imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
-                    avatar = imgUAIBOT
-        
 
-    colision_idx = colision_basuraV(new_x, new_y)#Colision con basura Verde
-    if colision_idx is not None:
-        #print("tocando basura")
-        del basurasV[colision_idx]
-        score+=120
-        contBasuraCargadaV+=1
-        match playerId:
-            case 0:
-                if(contBasuraCargadaV==1):
-                    imgUAIBOT=pygame.image.load("UAIBOT 1 bolsa verde.png")
-                    imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
-                    avatar = imgUAIBOT
-                else:
-                    imgUAIBOT=pygame.image.load("UAIBOT 2 bolsas verdes.png")
-                    imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
-                    avatar = imgUAIBOT
+                case 1:
+                    if(contBasuraCargadaN==1 and contBasuraCargadaV==0):
+                        imgUAIBOT=pygame.image.load("UAIBOTA 1 bolsa negra.png")
+                        imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
+                        avatar = imgUAIBOT
+                    elif(contBasuraCargadaN==2):
+                        imgUAIBOT=pygame.image.load("UAIBOTA 2 bolsas negras.png")
+                        imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
+                        avatar = imgUAIBOT
+                    elif(contBasuraCargadaN==1 and contBasuraCargadaV==1):
+                        imgUAIBOT=pygame.image.load("UAIBOTA 2 bolsas negra y verde.png")
+                        imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
+                        avatar = imgUAIBOT
+                case 2:
+                    if(contBasuraCargadaN==1):
+                        imgUAIBOT=pygame.image.load("UAIBOTINA 1 bolsa negra.png")
+                        imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
+                        avatar = imgUAIBOT
+                case 3:
+                    if(contBasuraCargadaN==1):
+                        imgUAIBOT=pygame.image.load("UAIBOTINO 1 bolsa negra.png")
+                        imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
+                        avatar = imgUAIBOT
+            
+    if(tomarBasura):
+        colision_idx = colision_basuraV(new_x, new_y)#Colision con basura Verde
+        if colision_idx is not None:
+            #print("tocando basura")
+            del basurasV[colision_idx]
+            score+=120
+            contBasuraCargadaV+=1
+            print("Verde:",contBasuraCargadaV)
+            match playerId:
+                case 0:
+                    if(contBasuraCargadaV==1 and contBasuraCargadaN==0):
+                        imgUAIBOT=pygame.image.load("UAIBOT 1 bolsa verde.png")
+                        imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
+                        avatar = imgUAIBOT
+                    elif(contBasuraCargadaV==2):
+                        imgUAIBOT=pygame.image.load("UAIBOT 2 bolsas verdes.png")
+                        imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
+                        avatar = imgUAIBOT
+                    elif(contBasuraCargadaN==1 and contBasuraCargadaV==1):
+                        imgUAIBOT=pygame.image.load("UAIBOT 2 bolsas negra y verde.png")
+                        imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
+                        avatar = imgUAIBOT
 
-            case 1:
-                if(contBasuraCargadaV==1):
-                    imgUAIBOT=pygame.image.load("UAIBOTA 1 bolsa verde.png")
-                    imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
-                    avatar = imgUAIBOT
-                else:
-                    imgUAIBOT=pygame.image.load("UAIBOTA 2 bolsas verdes.png")
-                    imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
-                    avatar = imgUAIBOT
-            case 2:
-                if(contBasuraCargadaV==1):
-                    imgUAIBOT=pygame.image.load("UAIBOTINA 1 bolsa verde.png")
-                    imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
-                    avatar = imgUAIBOT
-            case 3:
-                if(contBasuraCargadaV==1):
-                    imgUAIBOT=pygame.image.load("UAIBOTINO 1 bolsa verde.png")
-                    imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
-                    avatar = imgUAIBOT
+                case 1:
+                    if(contBasuraCargadaV==1 and contBasuraCargadaN==0):
+                        imgUAIBOT=pygame.image.load("UAIBOTA 1 bolsa verde.png")
+                        imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
+                        avatar = imgUAIBOT
+                    elif(contBasuraCargadaV==2):
+                        imgUAIBOT=pygame.image.load("UAIBOTA 2 bolsas verdes.png")
+                        imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
+                        avatar = imgUAIBOT
+                    elif(contBasuraCargadaN==1 and contBasuraCargadaV==1):
+                        imgUAIBOT=pygame.image.load("UAIBOTA 2 bolsas negra y verde.png")
+                        imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
+                        avatar = imgUAIBOT
+                case 2:
+                    if(contBasuraCargadaV==1):
+                        imgUAIBOT=pygame.image.load("UAIBOTINA 1 bolsa verde.png")
+                        imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
+                        avatar = imgUAIBOT
+                case 3:
+                    if(contBasuraCargadaV==1):
+                        imgUAIBOT=pygame.image.load("UAIBOTINO 1 bolsa verde.png")
+                        imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
+                        avatar = imgUAIBOT
 
         
     #Colocando limites en los bordes
@@ -378,4 +413,4 @@ while play:
     pygame.display.update()
 #=======================================================================================================================
 
-pygame.quit()            
+pygame.quit()           
