@@ -30,11 +30,11 @@ basuraHeight=40
 tacho_width=60
 tacho_height=60
 
-T1_posY = 260
-T1_posX = 150
+TN_posY = 260
+TN_posX = 150
 
-T2_posY = 450
-T2_posX = 460
+TV_posY = 450
+TV_posX = 460
 
 #NPC Game TWO(2)
 N2_posY = 15
@@ -98,12 +98,12 @@ try:
     imgFondo = pygame.image.load('fondojuegodefi.png').convert()
     imgFondo = pygame.transform.scale(imgFondo, (WIDTH, HEIGHT))
     imgUAIBOT=robots[0]                                              #robot elegido
-    imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))  # Cambia (50, 50) al tamaño deseado
+    imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))  
     #Tachos===============================================
-    imgTacho = pygame.image.load("tacho-de-basura.png")
-    imgTacho = pygame.transform.scale(imgTacho, (tacho_width,tacho_height))
-    imgTacho2 = pygame.image.load ("tacho-de-basura2.png")
-    imgTacho2 = pygame.transform.scale (imgTacho2, (tacho_width,tacho_height))
+    imgTachoN = pygame.image.load("tacho-de-basura.png")
+    imgTachoN = pygame.transform.scale(imgTachoN, (tacho_width,tacho_height))
+    imgTachoV = pygame.image.load ("tacho-de-basura2.png")
+    imgTachoV = pygame.transform.scale (imgTachoV, (tacho_width,tacho_height))
     #basura===============================================
     imgBasuraN1 = pygame.image.load ("Bolsa negra.png")
     imgBasuraN1 = pygame.transform.scale(imgBasuraN1, (basuraWidth,basuraHeight))
@@ -143,13 +143,86 @@ Green = (0, 255, 0)
 Grey = (50, 50, 50)
 
 #Funciones
+
+def cambioImagenesBotsBolsas(playerId,contBasuraCargadaN,contBasuraCargadaV):
+    match playerId:
+        case 0:
+            if(contBasuraCargadaN==0 and contBasuraCargadaV==0):
+                avatar=robots[playerId]                                              #robot elegido
+                avatar = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth)) 
+            elif(contBasuraCargadaN==1 and contBasuraCargadaV==0):
+                avatar = cargarImagenTomandoBolsas("UAIBOT 1 bolsa negra.png")
+
+            elif(contBasuraCargadaN==2):
+                avatar = cargarImagenTomandoBolsas("UAIBOT 2 bolsas negras.png")
+
+            elif(contBasuraCargadaN==1 and contBasuraCargadaV==1):                        
+                avatar = cargarImagenTomandoBolsas("UAIBOT 2 bolsas negra y verde.png")
+
+            elif(contBasuraCargadaV==1 and contBasuraCargadaN==0):                       
+                avatar = cargarImagenTomandoBolsas("UAIBOT 1 bolsa verde.png")
+
+            elif(contBasuraCargadaV==2):                        
+                avatar = cargarImagenTomandoBolsas("UAIBOT 2 bolsas verdes.png")
+          
+
+        case 1:
+            if(contBasuraCargadaN==0 and contBasuraCargadaV==0):
+                avatar = robots[playerId]
+            elif(contBasuraCargadaN==1 and contBasuraCargadaV==0):                        
+                avatar = cargarImagenTomandoBolsas("UAIBOTA 1 bolsa negra.png")
+
+            elif(contBasuraCargadaN==2):                       
+                avatar = cargarImagenTomandoBolsas("UAIBOTA 2 bolsas negras.png")
+
+            elif(contBasuraCargadaN==1 and contBasuraCargadaV==1):                       
+                        avatar = cargarImagenTomandoBolsas("UAIBOTA 2 bolsas negra y verde.png")
+
+            elif(contBasuraCargadaV==1 and contBasuraCargadaN==0):
+                avatar = cargarImagenTomandoBolsas("UAIBOTA 1 bolsa verde.png")
+
+            elif(contBasuraCargadaV==2):                        
+                avatar = cargarImagenTomandoBolsas("UAIBOTA 2 bolsas verdes.png")
+
+        case 2:
+            if(contBasuraCargadaN==0):
+                avatar = robots[playerId]
+
+            elif(contBasuraCargadaN==1):                        
+                avatar = cargarImagenTomandoBolsas("UAIBOTINA 1 bolsa negra.png")
+
+            elif(contBasuraCargadaV==1):                       
+                avatar = cargarImagenTomandoBolsas("UAIBOTINA 1 bolsa verde.png")
+
+        case 3:
+            if(contBasuraCargadaN==0):
+                 avatar = robots[playerId]
+            elif(contBasuraCargadaN==1):                        
+                        avatar = cargarImagenTomandoBolsas("UAIBOTINO 1 bolsa negra.png")
+            if(contBasuraCargadaV==1):                       
+                avatar = cargarImagenTomandoBolsas("UAIBOTINO 1 bolsa verde.png")
+    return avatar
+
+
 def cargarImagenTomandoBolsas(imageName):
     imgUAIBOT=pygame.image.load(imageName)
     imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
     avatar = imgUAIBOT
     return avatar
 
+def colision_TachoN(x1, y1):        
+    x2 = TN_posX
+    y2 = TN_posY
+    if x1 < x2 + tacho_width and x1 + playerWidth > x2 and y1 < y2 + tacho_height and y1 + playerHeight > y2:
+        return True
+    return False
 
+def colision_TachoV(x1, y1):        
+    x2 = TV_posX
+    y2 = TV_posY
+    if x1 < x2 + tacho_width and x1 + playerWidth > x2 and y1 < y2 + tacho_height and y1 + playerHeight > y2:
+        return True
+    return False
 
 def colision_basuraN(x1, y1):
         for i, basura in enumerate(basurasN):
@@ -158,6 +231,7 @@ def colision_basuraN(x1, y1):
             if x1 < x2 + basuraWidth and x1 + playerWidth > x2 and y1 < y2 + basuraHeight and y1 + playerHeight > y2:
                 return i
         return None
+
 
 def colision_basuraV(x1, y1):
         for i, basura in enumerate(basurasV):
@@ -214,10 +288,10 @@ def preview1():
     
 
 def dibujartachos():
-    global imgTacho
-    screen.blit(imgTacho, (T1_posX, T1_posY))
-    global imgTacho2
-    screen.blit(imgTacho2, (T2_posX, T2_posY))
+    global imgTachoN
+    screen.blit(imgTachoN, (TN_posX, TN_posY))
+    global imgTachoV
+    screen.blit(imgTachoV, (TV_posX, TV_posY))
     
 def dibujarpuntaje():
     texto = font.render(f"Score: {score}", True, White)
@@ -298,80 +372,54 @@ while play:
         else:
             tomarBasura=False
 
+    #print(colision_TachoN(new_x,new_y))
+
+    if(colision_TachoN(new_x,new_y)):
+        if(contBasuraCargadaN==1):
+             contBasuraCargadaN=0
+             score+=100
+             #sumar Score
+        elif(contBasuraCargadaN==2):
+             contBasuraCargadaN=0
+             score+=200
+             #sumar Score
+        tomarBasura=True
+        if(contBasuraCargadaV!=2):
+            avatar=cambioImagenesBotsBolsas(playerId,contBasuraCargadaN,contBasuraCargadaV)
+
     if(tomarBasura):    
         colision_idx = colision_basuraN(new_x, new_y) #Colision con basura Negra
         if colision_idx is not None:
             #print("tocando basura")
             del basurasN[colision_idx]
-            score+=100
+            
             contBasuraCargadaN+=1
             print("Negra:",contBasuraCargadaN)
-            match playerId:
-                case 0:
-                    if(contBasuraCargadaN==1 and contBasuraCargadaV==0):
-                        avatar = cargarImagenTomandoBolsas("UAIBOT 1 bolsa negra.png")
-
-                    elif(contBasuraCargadaN==2):
-                        avatar = cargarImagenTomandoBolsas("UAIBOT 2 bolsas negras.png")
-
-                    elif(contBasuraCargadaN==1 and contBasuraCargadaV==1):                        
-                        avatar = cargarImagenTomandoBolsas("UAIBOT 2 bolsas negra y verde.png")
-
-                case 1:
-                    if(contBasuraCargadaN==1 and contBasuraCargadaV==0):                        
-                        avatar = cargarImagenTomandoBolsas("UAIBOTA 1 bolsa negra.png")
-
-                    elif(contBasuraCargadaN==2):                       
-                        avatar = cargarImagenTomandoBolsas("UAIBOTA 2 bolsas negras.png")
-
-                    elif(contBasuraCargadaN==1 and contBasuraCargadaV==1):                       
-                        avatar = cargarImagenTomandoBolsas("UAIBOTA 2 bolsas negra y verde.png")
-
-                case 2:
-                    if(contBasuraCargadaN==1):                        
-                        avatar = cargarImagenTomandoBolsas("UAIBOTINA 1 bolsa negra.png")
-
-                case 3:
-                    if(contBasuraCargadaN==1):                        
-                        avatar = cargarImagenTomandoBolsas("UAIBOTINO 1 bolsa negra.png")
-
+            avatar=cambioImagenesBotsBolsas(playerId,contBasuraCargadaN,contBasuraCargadaV)
             
+
+    if(colision_TachoV(new_x,new_y)):
+        if(contBasuraCargadaV==1):
+            contBasuraCargadaV=0
+            score+=120
+             #sumar Score
+        elif(contBasuraCargadaV==2):
+            contBasuraCargadaV=0
+            score+=240
+             #sumar Score
+        tomarBasura=True
+        if(contBasuraCargadaN!=2):
+            avatar=cambioImagenesBotsBolsas(playerId,contBasuraCargadaN,contBasuraCargadaV)
+
     if(tomarBasura):
         colision_idx = colision_basuraV(new_x, new_y)#Colision con basura Verde
         if colision_idx is not None:
             #print("tocando basura")
             del basurasV[colision_idx]
-            score+=120
+           
             contBasuraCargadaV+=1
             print("Verde:",contBasuraCargadaV)
-            match playerId:
-                case 0:
-                    if(contBasuraCargadaV==1 and contBasuraCargadaN==0):                       
-                        avatar = cargarImagenTomandoBolsas("UAIBOT 1 bolsa verde.png")
-
-                    elif(contBasuraCargadaV==2):                        
-                        avatar = cargarImagenTomandoBolsas("UAIBOT 2 bolsas verdes.png")
-
-                    elif(contBasuraCargadaN==1 and contBasuraCargadaV==1):                       
-                        avatar = cargarImagenTomandoBolsas("UAIBOT 2 bolsas negra y verde.png")
-
-                case 1:
-                    if(contBasuraCargadaV==1 and contBasuraCargadaN==0):                        
-                        avatar = cargarImagenTomandoBolsas("UAIBOTA 1 bolsa verde.png")
-
-                    elif(contBasuraCargadaV==2):                        
-                        avatar = cargarImagenTomandoBolsas("UAIBOTA 2 bolsas verdes.png")
-
-                    elif(contBasuraCargadaN==1 and contBasuraCargadaV==1):                        
-                        avatar = cargarImagenTomandoBolsas("UAIBOTA 2 bolsas negra y verde.png")
-
-                case 2:
-                    if(contBasuraCargadaV==1):                       
-                        avatar = cargarImagenTomandoBolsas("UAIBOTINA 1 bolsa verde.png")
-
-                case 3:
-                    if(contBasuraCargadaV==1):                       
-                        avatar = cargarImagenTomandoBolsas("UAIBOTINO 1 bolsa verde.png")
+            avatar=cambioImagenesBotsBolsas(playerId,contBasuraCargadaN,contBasuraCargadaV)
 
         
     #Colocando limites en los bordes
