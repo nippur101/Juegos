@@ -149,7 +149,7 @@ def cambioImagenesBotsBolsas(playerId,contBasuraCargadaN,contBasuraCargadaV):
         case 0:
             if(contBasuraCargadaN==0 and contBasuraCargadaV==0):
                 avatar=robots[playerId]                                              #robot elegido
-                avatar = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth)) 
+                avatar = pygame.transform.scale(avatar, (playerHeight, playerWidth)) 
             elif(contBasuraCargadaN==1 and contBasuraCargadaV==0):
                 avatar = cargarImagenTomandoBolsas("UAIBOT 1 bolsa negra.png")
 
@@ -169,6 +169,7 @@ def cambioImagenesBotsBolsas(playerId,contBasuraCargadaN,contBasuraCargadaV):
         case 1:
             if(contBasuraCargadaN==0 and contBasuraCargadaV==0):
                 avatar = robots[playerId]
+                avatar = pygame.transform.scale(avatar, (playerHeight, playerWidth)) 
             elif(contBasuraCargadaN==1 and contBasuraCargadaV==0):                        
                 avatar = cargarImagenTomandoBolsas("UAIBOTA 1 bolsa negra.png")
 
@@ -185,26 +186,38 @@ def cambioImagenesBotsBolsas(playerId,contBasuraCargadaN,contBasuraCargadaV):
                 avatar = cargarImagenTomandoBolsas("UAIBOTA 2 bolsas verdes.png")
 
         case 2:
-            if(contBasuraCargadaN==0):
+            if(contBasuraCargadaN==0 and contBasuraCargadaV==0):
                 avatar = robots[playerId]
+                avatar = pygame.transform.scale(avatar, (playerHeight, playerWidth))
 
-            elif(contBasuraCargadaN==1):                        
+            elif(contBasuraCargadaN==1 and contBasuraCargadaV==0):                        
                 avatar = cargarImagenTomandoBolsas("UAIBOTINA 1 bolsa negra.png")
 
-            elif(contBasuraCargadaV==1):                       
+            elif(contBasuraCargadaN==0 and contBasuraCargadaV==1):
                 avatar = cargarImagenTomandoBolsas("UAIBOTINA 1 bolsa verde.png")
 
+            elif(contBasuraCargadaN==1 and contBasuraCargadaV==1):                        
+                avatar = cargarImagenTomandoBolsas("UAIBOTINA 2 bolsas negra y verde.png")
+
         case 3:
-            if(contBasuraCargadaN==0):
-                 avatar = robots[playerId]
-            elif(contBasuraCargadaN==1):                        
-                        avatar = cargarImagenTomandoBolsas("UAIBOTINO 1 bolsa negra.png")
-            if(contBasuraCargadaV==1):                       
+            if(contBasuraCargadaN==0 and contBasuraCargadaV==0):
+                avatar = robots[playerId]
+                avatar = pygame.transform.scale(avatar, (playerHeight, playerWidth))
+
+            elif(contBasuraCargadaN==1 and contBasuraCargadaV==0):                        
+                avatar = cargarImagenTomandoBolsas("UAIBOTINO 1 bolsa negra.png")
+
+            elif(contBasuraCargadaN==0 and contBasuraCargadaV==1):                       
                 avatar = cargarImagenTomandoBolsas("UAIBOTINO 1 bolsa verde.png")
+                
+            elif(contBasuraCargadaN==1 and contBasuraCargadaV==1):                        
+                avatar = cargarImagenTomandoBolsas("UAIBOTINO 2 bolsas negra y verde.png")
+
     return avatar
 
 
 def cargarImagenTomandoBolsas(imageName):
+    print(imageName)
     imgUAIBOT=pygame.image.load(imageName)
     imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
     avatar = imgUAIBOT
@@ -261,17 +274,26 @@ def colision_fondo_infraqueable(x, y, width, height):
                 return True
     return False
 
-def colision_camino(x, y, width, height):
+def colision_camino(x, y, width, height,playerId):
     x = int(x)
     y = int(y)
+    velocity=0.8
     width = int(width/2)
     height = int(height/2)
     for i in range(x, x + width):
         for j in range(y, y + height):
             if imgFondo.get_at((i, j)) == ROAD_COLOR or  imgFondo.get_at((i, j)) == BRIDGE_COLOR :
-                return 1.5
+                if(playerId==0 or playerId==1):
+                    velocity= 1.5
+                elif(playerId==2 or playerId==3):
+                    velocity= 2.5
             else:
-                return 0.8
+                if(playerId==0 or playerId==1):
+                    velocity= 0.8
+                else:                    
+                    velocity= 1.5                
+                    
+    return velocity
     
 
 
@@ -335,7 +357,7 @@ while play:
     keys = pygame.key.get_pressed()
     new_x, new_y = posX, posY
 
-    Speed=colision_camino(new_x,new_y,playerWidth,playerHeight)
+    Speed=colision_camino(new_x,new_y,playerWidth,playerHeight,playerId)
     #print(Speed)
     if keys[pygame.K_LEFT]:
         new_x -= Speed
@@ -394,7 +416,7 @@ while play:
             del basurasN[colision_idx]
             
             contBasuraCargadaN+=1
-            print("Negra:",contBasuraCargadaN)
+            #print("Negra:",contBasuraCargadaN)
             avatar=cambioImagenesBotsBolsas(playerId,contBasuraCargadaN,contBasuraCargadaV)
             
 
