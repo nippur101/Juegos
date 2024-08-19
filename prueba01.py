@@ -149,7 +149,7 @@ Grey = (50, 50, 50)
 #Funciones
 
 def mostrarPantallaFinal(score):
-    imgGanaste = pygame.image.load("ganaste.png").convert()
+    imgGanaste = pygame.image.load("ganaste.jpg").convert()
     imgGanaste = pygame.transform.scale(imgGanaste, (WIDTH, HEIGHT))
     screen.blit(imgGanaste, (0, 0)) 
     texto_final = font2.render(f"Score Final: {score}", True, Grey)
