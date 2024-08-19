@@ -1,0 +1,8 @@
+Reglas:
+-Elije el robot a utilzar con la letra C.
+(Si moviste tu personaje ya no puedes cambiarlo)
+UAIBOT y UAIBOTA se mueven mas lento pero cargan 2 bolsas.
+UAIBOTINA y UAIBOTINO se mueven mas rapido pero solo cargan una bolsa.
+-Los personajes se mueven con las flechas.
+-Debes juntar todas las bolsas de baura del parque colocandolas en los cestos que corresponda.
+-Por los caminos te mueves mas rapido.

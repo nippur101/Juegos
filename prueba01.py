@@ -13,6 +13,8 @@ RIVER_COLOR=(99,155,255) #color del Rio
 ROAD_COLOR=(138,111,48)#color del camino
 BRIDGE_COLOR=(102,57,49)
 
+
+
 #Player Position
 playerId=0
 playerHeight=45
@@ -124,6 +126,8 @@ try:
    #fondo complementos===============================================
     imgArbol = pygame.image.load ("arbol.png")
     imgArbol = pygame.transform.scale (imgArbol, (110,110))
+    imgPantallaInicio = pygame.image.load("portada800x600.jpg")
+    imgPantallaReglas = pygame.image.load("portadaReglas800x600.jpg")
 except pygame.error as e:
     print(f"Error al cargar las imágenes: {e}")
 
@@ -143,6 +147,20 @@ Green = (0, 255, 0)
 Grey = (50, 50, 50)
 
 #Funciones
+def mostrarPantallaInicio(imgPantallaInicio):
+    screen.blit(imgPantallaInicio, (0, 0))
+    pygame.display.flip()
+
+    esperandoInicio = True
+    while esperandoInicio:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            elif event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
+                esperandoInicio = False
+
+
 
 def cambioImagenesBotsBolsas(playerId,contBasuraCargadaN,contBasuraCargadaV):
     match playerId:
@@ -209,7 +227,7 @@ def cambioImagenesBotsBolsas(playerId,contBasuraCargadaN,contBasuraCargadaV):
 
             elif(contBasuraCargadaN==0 and contBasuraCargadaV==1):                       
                 avatar = cargarImagenTomandoBolsas("UAIBOTINO 1 bolsa verde.png")
-                
+
             elif(contBasuraCargadaN==1 and contBasuraCargadaV==1):                        
                 avatar = cargarImagenTomandoBolsas("UAIBOTINO 2 bolsas negra y verde.png")
 
@@ -315,8 +333,16 @@ def dibujartachos():
     global imgTachoV
     screen.blit(imgTachoV, (TV_posX, TV_posY))
     
-def dibujarpuntaje():
-    texto = font.render(f"Score: {score}", True, White)
+def dibujarpuntaje(playerId):
+    if(playerId==0):
+        name="UAIBOT"
+    elif(playerId==1):
+        name="UAIBOTA"
+    elif(playerId==2):
+        name="UAIBOTINA"
+    elif(playerId==3):
+        name="UAIBOTINO"
+    texto = font.render(f"{name} Score: {score}", True, White)
     screen.blit(texto, (50,10))
 
 def dibujarbasurasV():
@@ -346,6 +372,8 @@ basurasV =[{"img": imgBasuraV1, "posX": V1_posX, "posY": V1_posY},
     {"img": imgBasuraV3, "posX": V3_posX, "posY": V3_posY},
     {"img": imgBasuraV4, "posX": V4_posX, "posY": V4_posY}]
 #================Bucle del Juego=========================================================================================
+mostrarPantallaInicio(imgPantallaInicio)
+mostrarPantallaInicio(imgPantallaReglas)
 while play:
 
     clock.tick(60)
@@ -456,6 +484,7 @@ while play:
     
 
     #Visualizacion
+    
     if playin == 1:
         Inicio()
         
@@ -467,7 +496,7 @@ while play:
     dibujarbasurasV()
     dibujarbasurasN()
     dibujararboles()
-    dibujarpuntaje()
+    dibujarpuntaje(playerId)
     pygame.display.update()
 #=======================================================================================================================
 

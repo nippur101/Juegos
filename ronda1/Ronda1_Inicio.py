@@ -9,7 +9,7 @@ os.chdir(script_dir)
 def damePantalla():
     pygame.init()
     pygame.display.set_caption("OFIRCA 2024 - Ronda 1 - Inicio")
-    pantalla = pygame.display.set_mode((1152, 648))         
+    pantalla = pygame.display.set_mode((800, 600))         
     return pantalla
 
 pantalla = damePantalla()
@@ -24,6 +24,11 @@ ticksAlComenzar = pygame.time.get_ticks()
 clock = pygame.time.Clock()
 juegoEnEjecucion = True
 
+# Variables para el temporizador
+duracionJuegoSegundos = 60  # Duración total del juego en segundos
+tiempoRestante = duracionJuegoSegundos  # Inicialmente igual a la duración total
+tiempoFuente = pygame.font.SysFont('Arial', 36)  # Fuente para mostrar el temporizador
+
 # Cargo los recursos
 try:
     imgFondo = pygame.image.load("fondo.png")
@@ -32,6 +37,7 @@ try:
     imgBolsaGrisOscuro = pygame.transform.scale(pygame.image.load("BolsaGrisOscuro.png").convert_alpha(), (pantalla.get_width() // 12, pantalla.get_height() // 12))
     imgCestoNegro = pygame.transform.scale(pygame.image.load("cestonegro.png").convert_alpha(), (pantalla.get_width() // 12, pantalla.get_height() // 12))
     imgCestoVerde = pygame.transform.scale(pygame.image.load("cestoverde.png").convert_alpha(), (pantalla.get_width() // 12, pantalla.get_height() // 12))
+    imgPantallaInicio = pygame.image.load("portada800x600.jpg")
 except pygame.error as e:
     print(f"Error al cargar las imágenes: {e}")
 
@@ -67,16 +73,40 @@ def dibujarJugador():
     global avatar
     pantalla.blit(avatar, avatar_rect)
 
+def dibujarTemporizador():
+    global tiempoRestante
+    tiempoRestante = duracionJuegoSegundos - (pygame.time.get_ticks() - ticksAlComenzar) // 1000
+    if tiempoRestante < 0:
+        tiempoRestante = 0
+    textoTemporizador = tiempoFuente.render(f"Tiempo: {tiempoRestante} s", True, colorBlanco)
+    pantalla.blit(textoTemporizador, (pantalla.get_width() // 2 - textoTemporizador.get_width() // 2, 10))
+
 def dibujarTodo():  
     dibujarUIyFondo()
     dibujarBasuraYTachos() 
-    dibujarJugador()   
+    dibujarJugador()
+    dibujarTemporizador()
 
 def iniciarJuego():
     global ticksAlComenzar, rapidezPersonaje
     ticksAlComenzar = pygame.time.get_ticks()
     rapidezPersonaje = 10   
 
+def mostrarPantallaInicio():
+    pantalla.blit(imgPantallaInicio, (0, 0))
+    dibujarTexto('Presiona cualquier tecla o haz clic en cualquier parte para comenzar', tipografiaGrande, colorBlanco, 800, 50, colorNegro, 176, 300)
+    pygame.display.flip()
+
+    esperandoInicio = True
+    while esperandoInicio:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            elif event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
+                esperandoInicio = False
+
+mostrarPantallaInicio()
 iniciarJuego()
 
 # Bucle de juego
@@ -99,5 +129,8 @@ while juegoEnEjecucion:
     
     dibujarTodo()
     pygame.display.flip()
+    
+    if tiempoRestante <= 0:
+        juegoEnEjecucion = False  # Termina el juego cuando el temporizador llega a 0
           
 pygame.quit()
