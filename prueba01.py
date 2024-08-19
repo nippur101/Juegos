@@ -6,8 +6,6 @@ playin = 1
 GamePreview = 0 #Poner en Cero(0) por Defecto
 
 clock=pygame.time.Clock()
-# Inicializa el tiempo de inicio
-start_time = pygame.time.get_ticks()
 
 #pantalla
 HEIGHT=600
@@ -151,6 +149,18 @@ Grey = (50, 50, 50)
 
 #Funciones
 
+def mostrarPantallaFinal(score):
+    imgGanaste = pygame.image.load("ganaste.png").convert()
+    imgGanaste = pygame.transform.scale(imgGanaste, (WIDTH, HEIGHT))
+    screen.blit(imgGanaste, (0, 0))
+    
+    texto_final = font.render(f"Score Final: {score}", True, White)
+    screen.blit(texto_final, (WIDTH // 2 - texto_final.get_width() // 2, HEIGHT // 2 - texto_final.get_height() // 2))
+    
+    pygame.display.flip()
+    pygame.time.delay(10000)  # Mantener la pantalla final por 5 segundos
+    pygame.quit()
+    quit()
 
 def temporizador():
     # Calcula el tiempo transcurrido en segundos
@@ -163,6 +173,7 @@ def temporizador():
     text_rect = tiempo_texto.get_rect(center=(WIDTH // 2, 20))
     
     screen.blit(tiempo_texto, text_rect)
+    return seconds
     
     
 def mostrarPantallaInicio(imgPantallaInicio):
@@ -348,6 +359,7 @@ def colision_camino(x, y, width, height,playerId):
 def Inicio():
     screen.blit(imgFondo, (0, 0))
     
+    
 def dibujarJugador():
     global avatar
     screen.blit(avatar, (posX, posY)) #Movimiento a la imagen del robot
@@ -404,8 +416,13 @@ basurasV =[{"img": imgBasuraV1, "posX": V1_posX, "posY": V1_posY},
 #================Bucle del Juego=========================================================================================
 mostrarPantallaInicio(imgPantallaInicio)
 mostrarPantallaInicio(imgPantallaReglas)
+bandera=True
+segundos=0
 while play:
-
+    if(bandera==True):#para que arranque el tiempo cuando empieza el juego
+        start_time = pygame.time.get_ticks()
+        bandera=False
+        
     clock.tick(60)
     
     for event in pygame.event.get():
@@ -520,13 +537,17 @@ while play:
         
     if GamePreview == 1:
         preview1()
-    temporizador()
+    
+    segundos=temporizador()
     dibujarJugador() 
     dibujartachos()
     dibujarbasurasV()
     dibujarbasurasN()
     dibujararboles()
     dibujarpuntaje(playerId)
+    if segundos >=60 or score==120:
+        play = False  
+        mostrarPantallaFinal(score)
     pygame.display.update()
 #=======================================================================================================================
 
