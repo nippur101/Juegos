@@ -6,6 +6,9 @@ playin = 1
 GamePreview = 0 #Poner en Cero(0) por Defecto
 
 clock=pygame.time.Clock()
+# Inicializa el tiempo de inicio
+start_time = pygame.time.get_ticks()
+
 #pantalla
 HEIGHT=600
 WIDTH=800
@@ -147,6 +150,33 @@ Green = (0, 255, 0)
 Grey = (50, 50, 50)
 
 #Funciones
+
+
+def temporizador():
+    # Calcula el tiempo transcurrido en segundos
+    elapsed_time = (pygame.time.get_ticks() - start_time) // 1000
+
+    seconds = elapsed_time % 60
+
+    tiempo_texto = font.render(f"Tiempo: {seconds:02}", True, White)
+    
+    text_rect = tiempo_texto.get_rect(center=(WIDTH // 2, 20))
+    
+    screen.blit(tiempo_texto, text_rect)
+    
+    
+def mostrarPantallaInicio(imgPantallaInicio):
+    screen.blit(imgPantallaInicio, (0, 0))
+    pygame.display.flip()
+
+    esperandoInicio = True
+    while esperandoInicio:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            elif event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
+                esperandoInicio = False
 def mostrarPantallaInicio(imgPantallaInicio):
     screen.blit(imgPantallaInicio, (0, 0))
     pygame.display.flip()
@@ -481,7 +511,7 @@ while play:
         posY=0
     if posY+playerHeight>HEIGHT:
         posY=HEIGHT-playerHeight
-    
+   
 
     #Visualizacion
     
@@ -490,7 +520,7 @@ while play:
         
     if GamePreview == 1:
         preview1()
-
+    temporizador()
     dibujarJugador() 
     dibujartachos()
     dibujarbasurasV()
