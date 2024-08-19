@@ -86,6 +86,7 @@ pygame.display.set_caption("OFIRCA Olimpiadas")
 
 # Inicializa la fuente
 font = pygame.font.Font(None, 36)  # None para la fuente predeterminada, 36 es el tamaño de la fuente
+font2 = pygame.font.Font(None, 72) 
 score = 0  # Variable para el puntaje
 
 # Cargo los recursos
@@ -152,21 +153,23 @@ Grey = (50, 50, 50)
 def mostrarPantallaFinal(score):
     imgGanaste = pygame.image.load("ganaste.png").convert()
     imgGanaste = pygame.transform.scale(imgGanaste, (WIDTH, HEIGHT))
-    screen.blit(imgGanaste, (0, 0))
-    
-    texto_final = font.render(f"Score Final: {score}", True, White)
+    screen.blit(imgGanaste, (0, 0)) 
+    texto_final = font2.render(f"Score Final: {score}", True, Grey)
     screen.blit(texto_final, (WIDTH // 2 - texto_final.get_width() // 2, HEIGHT // 2 - texto_final.get_height() // 2))
-    
+    esperandoInicio=True
     pygame.display.flip()
-    pygame.time.delay(10000)  # Mantener la pantalla final por 5 segundos
-    pygame.quit()
-    quit()
+    while esperandoInicio:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+                
 
 def temporizador():
     # Calcula el tiempo transcurrido en segundos
     elapsed_time = (pygame.time.get_ticks() - start_time) // 1000
 
-    seconds = elapsed_time % 60
+    seconds = min(elapsed_time, 60)
 
     tiempo_texto = font.render(f"Tiempo: {seconds:02}", True, White)
     
@@ -545,8 +548,9 @@ while play:
     dibujarbasurasN()
     dibujararboles()
     dibujarpuntaje(playerId)
-    if segundos >=60 or score==120:
-        play = False  
+    if segundos >=60 or score==780:
+        play = False
+        score=score+10*(60-segundos)  
         mostrarPantallaFinal(score)
     pygame.display.update()
 #=======================================================================================================================
