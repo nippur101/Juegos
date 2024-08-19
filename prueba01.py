@@ -29,7 +29,7 @@ basuraWidth=40
 basuraHeight=40
 
 
-#Tachos
+#Tachos posicion
 tacho_width=60
 tacho_height=60
 
@@ -39,30 +39,28 @@ TN_posX = 150
 TV_posY = 450
 TV_posX = 460
 
-#NPC Game TWO(2)
-N2_posY = 15
+#Basura negra posicion
+N2_posY = 50
 N2_posX = 250
 
-#NPC Game TREE(3)
 N3_posY = 300
 N3_posX = 700
 
-#NPC Game four(4)
 N4_posY = 500
 N4_posX = 30
 
-#Basura verde
+#Basura verde posicion
 V1_posY = 100
 V1_posX = 100
 
-V2_posY = 200
-V2_posX = 200
+V2_posY = 500
+V2_posX = 600
 
 V3_posY = 150
 V3_posX = 300
 
-V4_posY = 250
-V4_posX = 300
+V4_posY = 50
+V4_posX = 700
 
 
 
@@ -279,7 +277,7 @@ def cambioImagenesBotsBolsas(playerId,contBasuraCargadaN,contBasuraCargadaV):
 
 
 def cargarImagenTomandoBolsas(imageName):
-    print(imageName)
+    #print(imageName)
     imgUAIBOT=pygame.image.load(imageName)
     imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
     avatar = imgUAIBOT
@@ -518,7 +516,7 @@ while play:
             del basurasV[colision_idx]
            
             contBasuraCargadaV+=1
-            print("Verde:",contBasuraCargadaV)
+            #print("Verde:",contBasuraCargadaV)
             avatar=cambioImagenesBotsBolsas(playerId,contBasuraCargadaN,contBasuraCargadaV)
 
         
