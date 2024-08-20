@@ -15,7 +15,7 @@ ROAD_COLOR=(138,111,48)#color del camino
 BRIDGE_COLOR=(102,57,49)
 
 
-
+#=======================Veriables de posicion y movimiento de objetos===============================
 #Player Position
 playerId=0
 playerHeight=45
@@ -89,7 +89,7 @@ font = pygame.font.Font(None, 36)  # None para la fuente predeterminada, 36 es e
 font2 = pygame.font.Font(None, 72) 
 score = 0  # Variable para el puntaje
 
-# Cargo los recursos
+# =========================================Carga de imagenes=========================================
 try:
     robots = [
             pygame.image.load("UAIBOT.png"),  
@@ -148,7 +148,7 @@ Black = (0, 0, 0)
 Green = (0, 255, 0)
 Grey = (50, 50, 50)
 
-#Funciones
+#===================================FUNCIONES======================================================
 
 def llenarTachoN(basuN):        
         
@@ -217,21 +217,8 @@ def mostrarPantallaInicio(imgPantallaInicio):
                 quit()
             elif event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
                 esperandoInicio = False
-def mostrarPantallaInicio(imgPantallaInicio):
-    screen.blit(imgPantallaInicio, (0, 0))
-    pygame.display.flip()
 
-    esperandoInicio = True
-    while esperandoInicio:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-            elif event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
-                esperandoInicio = False
-
-
-
+#De acuerdo al robot elegido, cuando toma la basura cambia la imagen de avatar
 def cambioImagenesBotsBolsas(playerId,contBasuraCargadaN,contBasuraCargadaV):
     match playerId:
         case 0:
@@ -310,7 +297,7 @@ def cargarImagenTomandoBolsas(imageName):
     imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))
     avatar = imgUAIBOT
     return avatar
-
+# =============Colisiones con las basuras y los tachos===========
 def colision_TachoN(x1, y1):        
     x2 = TN_posX
     y2 = TN_posY
@@ -350,7 +337,7 @@ def cambiar_player(id):
     else:
         id+=1
         return id
-    
+# Colision con fondo COLOR especifico
 def colision_fondo_infraqueable(x, y, width, height):
     x = int(x)
     y = int(y)
@@ -388,7 +375,7 @@ def colision_camino(x, y, width, height,playerId):
 def Inicio():
     screen.blit(imgFondo, (0, 0))
     
-    
+#==== Carga de objetos======================================
 def dibujarJugador():
     global avatar
     screen.blit(avatar, (posX, posY)) #Movimiento a la imagen del robot
@@ -430,6 +417,8 @@ def dibujararboles():
     screen.blit(imgArbol, (A2_posX, A2_posY))
     screen.blit(imgArbol, (A3_posX, A3_posY))
     screen.blit(imgArbol, (A4_posX, A4_posY))
+    
+#============================================================================================
 
 # Lista de posiciones de las basuras negras y verdes
 basurasN = [
