@@ -23,6 +23,8 @@ playerWidth=45
 
 contBasuraCargadaN=0 #contado de basura que lleva el robot
 contBasuraCargadaV=0
+totalBN=0
+totalBV=0
 tomarBasura=True
 #basura
 basuraWidth=40
@@ -102,9 +104,9 @@ try:
     imgUAIBOT=robots[0]                                              #robot elegido
     imgUAIBOT = pygame.transform.scale(imgUAIBOT, (playerHeight, playerWidth))  
     #Tachos===============================================
-    imgTachoN = pygame.image.load("tacho-de-basura.png")
+    imgTachoN = pygame.image.load("tacho-de-basura-vacio.png")
     imgTachoN = pygame.transform.scale(imgTachoN, (tacho_width,tacho_height))
-    imgTachoV = pygame.image.load ("tacho-de-basura2.png")
+    imgTachoV = pygame.image.load ("tacho-de-basura2-vacio.png")
     imgTachoV = pygame.transform.scale (imgTachoV, (tacho_width,tacho_height))
     #basura===============================================
     imgBasuraN1 = pygame.image.load ("Bolsa negra.png")
@@ -147,6 +149,32 @@ Green = (0, 255, 0)
 Grey = (50, 50, 50)
 
 #Funciones
+
+def llenarTachoN(basuN):        
+        
+        if(basuN==1 or basuN==2):
+            imgTachoN = pygame.image.load("tacho-de-basura-medio.png")
+            imgTachoN = pygame.transform.scale(imgTachoN, (tacho_width,tacho_height))
+            
+        else:
+            imgTachoN = pygame.image.load("tacho-de-basura-lleno.png")
+            imgTachoN = pygame.transform.scale(imgTachoN, (tacho_width,tacho_height))
+            
+        return imgTachoN
+    
+def llenarTachoV(basuV):
+        
+        
+    if(basuV==1 or basuV==2 or basuV==3):
+        imgTachoV = pygame.image.load("tacho-de-basura2-medio.png")
+        imgTachoV = pygame.transform.scale(imgTachoV, (tacho_width,tacho_height)) 
+                   
+    else:
+        imgTachoV = pygame.image.load("tacho-de-basura2-lleno.png")
+        imgTachoV = pygame.transform.scale(imgTachoV, (tacho_width,tacho_height))            
+        
+    return imgTachoV
+
 
 def mostrarPantallaFinal(score):
     imgGanaste = pygame.image.load("ganaste.jpg").convert()
@@ -474,12 +502,17 @@ while play:
 
     if(colision_TachoN(new_x,new_y)):
         if(contBasuraCargadaN==1):
+             totalBN=totalBN+contBasuraCargadaN
              contBasuraCargadaN=0
              score+=100
+             imgTachoN=llenarTachoN(totalBN)
              #sumar Score
         elif(contBasuraCargadaN==2):
-             contBasuraCargadaN=0
-             score+=200
+            totalBN=totalBN+contBasuraCargadaN
+            contBasuraCargadaN=0
+            score+=200
+            imgTachoN=llenarTachoN(totalBN)
+            
              #sumar Score
         tomarBasura=True
         if(contBasuraCargadaV!=2):
@@ -497,13 +530,17 @@ while play:
             
 
     if(colision_TachoV(new_x,new_y)):
-        if(contBasuraCargadaV==1):
+        if(contBasuraCargadaV==1):            
+            totalBV=totalBV+contBasuraCargadaV
             contBasuraCargadaV=0
             score+=120
+            imgTachoV=llenarTachoV(totalBV)
              #sumar Score
         elif(contBasuraCargadaV==2):
+            totalBV=totalBV+contBasuraCargadaV
             contBasuraCargadaV=0
             score+=240
+            imgTachoV=llenarTachoV(totalBV)
              #sumar Score
         tomarBasura=True
         if(contBasuraCargadaN!=2):
