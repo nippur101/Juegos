@@ -128,7 +128,7 @@ try:
    #fondo complementos===============================================
     imgArbol = pygame.image.load ("arbol.png")
     imgArbol = pygame.transform.scale (imgArbol, (110,110))
-    imgPantallaInicio = pygame.image.load("portada800x600.jpg")
+    imgPantallaInicio = pygame.image.load("portada800x600.png")
     imgPantallaReglas = pygame.image.load("portadaReglas800x600.jpg")
 except pygame.error as e:
     print(f"Error al cargar las imágenes: {e}")
@@ -177,7 +177,7 @@ def llenarTachoV(basuV):
 
 
 def mostrarPantallaFinal(score):
-    imgGanaste = pygame.image.load("ganaste.jpg").convert()
+    imgGanaste = pygame.image.load("ganaste.png").convert()
     imgGanaste = pygame.transform.scale(imgGanaste, (WIDTH, HEIGHT))
     screen.blit(imgGanaste, (0, 0)) 
     texto_final = font2.render(f"Score Final: {score}", True, Grey)
