@@ -31,10 +31,11 @@ basuraWidth=40
 basuraHeight=40
 
 
-#Tachos posicion
+#Tacho tamaño
 tacho_width=60
 tacho_height=60
 
+#Tachos posicion
 TN_posY = 260
 TN_posX = 150
 
@@ -84,8 +85,8 @@ pygame.font.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("OFIRCA Olimpiadas")
 
-# Inicializa la fuente
-font = pygame.font.Font(None, 36)  # None para la fuente predeterminada, 36 es el tamaño de la fuente
+# Fuente
+font = pygame.font.Font(None, 36)  
 font2 = pygame.font.Font(None, 72) 
 score = 0  # Variable para el puntaje
 
@@ -338,6 +339,7 @@ def cambiar_player(id):
         id+=1
         return id
 # Colision con fondo COLOR especifico
+
 def colision_fondo_infraqueable(x, y, width, height):
     x = int(x)
     y = int(y)
@@ -348,8 +350,8 @@ def colision_fondo_infraqueable(x, y, width, height):
             if imgFondo.get_at((i, j)) == RIVER_COLOR:
                 return True
     return False
-
-def colision_camino(x, y, width, height,playerId):
+# Colision camino y mas velocidad por el
+def colision_camino(x, y, width, height, playerId):
     x = int(x)
     y = int(y)
     velocity=0.8
@@ -564,7 +566,7 @@ while play:
         
     if GamePreview == 1:
         preview1()
-    
+    # Iniciar funciones
     segundos=temporizador()
     dibujarJugador() 
     dibujartachos()
