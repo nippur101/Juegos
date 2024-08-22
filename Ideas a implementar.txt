@@ -1,0 +1,5 @@
+Tomar nombre del jugador, guardar json score
+niveles 
+boton reset
+mas mapas
+basura aleatoria
